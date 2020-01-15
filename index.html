@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+
+<html lang="en-US">
+
+<head class="collapsible">
+
+<meta charset="utf-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Will Durney | Code is beautiful</title>
+
+<meta name="author" content="Will Durney">
+
+<meta name="description" content="Will Durney is a software engineer, puzzle-solver, and lifelong tinkerer based in Washington, DC.">
+
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-156265569-1"></script>
+
+<script class="collapsible">
+
+  // Always assume you're being tracked on the internet; this site is no exception
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-156265569-1');
+
+</script>
+
+<style class="collapsible">
+
+  /* Solarized color-scheme (https://ethanschoonover.com/solarized/) */
+  :root {
+    --solarized-base03: #002b36;
+    --solarized-base02: #073642;
+    --solarized-base01: #586e75;
+    --solarized-base1: #93a1a1;
+    --solarized-base2: #eee8d5;
+    --solarized-base3: #fdf6e3;
+    --solarized-yellow: #b58900;
+    --solarized-orange: #cb4b16;
+    --solarized-cyan: #2aa198;
+    --solarized-green: #859900;
+    --primary: var(--solarized-base1);
+    --secondary: var(--solarized-base01);
+    --emphasis: var(--solarized-base2);
+    --background: var(--solarized-base03);
+  }
+
+  :root.light {
+    --primary: var(--solarized-base01);
+    --secondary: var(--solarized-base1);
+    --emphasis: var(--solarized-base02);
+    --background: var(--solarized-base3);
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0.5rem 0;
+    padding: 0;
+  }
+
+  html {
+    margin: auto;
+    padding: 1rem;
+    font-size: 15px;
+    font-family: monospace;
+    color: var(--primary);
+    background-color: var(--background);
+  }
+
+  h1 { color: var(--solarized-orange) }
+  h2 { color: var(--solarized-yellow) }
+
+  a {
+    color: var(--solarized-cyan);
+    text-decoration: none;
+  }
+
+  /* Desktop formatting reveals the interesting stuff */
+  @media screen and (min-width: 480px) {
+    /* Show all elements (even normally-hidden ones) */
+    * {
+      display: block;
+    }
+
+    html {
+      padding: 2rem;
+      width: 100ch;
+      white-space: pre;
+    }
+    html::before { content: '<!DOCTYPE html>\A' attr(data-opening-tag) }
+    head, body { white-space: normal }
+    body { height: fit-content }
+
+    /* Add html tag pseudo elements */
+    *::before, *::after {
+      font-size: 1rem;
+      font-size: max(1em, 1rem);
+      color: var(--secondary);
+    }
+
+    *::before { content: attr(data-opening-tag) }
+    *::after { content: attr(data-closing-tag) }
+
+    /* Simulate code indentation */
+    * > * { margin-left: 1.2rem }
+
+    /* Hide the contents of collapsed elements */
+    .collapsed, .collapsed *, .collapsed *::before, .collapsed *::after {
+      font-size: 0;
+      cursor: pointer;
+    }
+    .collapsed * { margin: 0 }
+
+    /* Specific element styling */
+    style, script, p { white-space: pre }
+    style, script { color: var(--solarized-green) }
+    a, em, strong {
+      display: inline;
+      margin-left: 0;
+    }
+
+    a:hover,
+    a:hover::before,
+    a:hover::after,
+    .collapsed:hover::before,
+    .collapsed:hover::after {
+      color: var(--emphasis);
+    }
+  }
+
+</style>
+
+</head><body>
+
+<h1>Hello, my name is Will Durney</h1>
+
+<h2>About me</h2>
+
+<p>
+  I'm a software engineer, puzzle-solver, and lifelong tinkerer based in Washington, DC.
+</p>
+
+<p>
+  I currently serve as a lead engineer at Crowdskout, a political and issue advocacy CRM.
+  For more information about my professional accomplishments and engineering work,
+  please visit my <a href="https://www.linkedin.com/in/willdurney/">LinkedIn</a>.
+  For casual chat, join me on <a href="https://twitter.com/WillDurney">Twitter</a>.
+</p>
+
+<h2>About this page</h2>
+
+<p>
+  The design of this page on desktop is intentional and inspired by Leon Bambrick's
+  <a href="https://secretgeek.github.io/html_wysiwyg/html.html">fantastic html quine</a>.
+  Briefly: <em>this page's content (w/ all sections expanded) is its own source code</em>.
+</p>
+
+<p>
+  My approach sacrifices some of the conceptual-purity of Bambrick's CSS-only solution
+  for the conciseness, interactivity, and beauty that introducing JavaScript allows.
+  Click around and see how it works or view the source (Ctrl+U / Cmd+Option+U).
+</p>
+
+<p>
+  Or maybe you'd prefer <a href="#" id="mode">light mode</a>?
+</p>
+
+<script class="collapsible">
+
+  // Add metadata for visible html tags surrounding all elements
+  function updateTags() {
+    document.querySelectorAll('*').forEach(element => {
+      let tag = element.tagName.toLowerCase();
+      let attrs = [];
+      let comment = element.classList.contains('collapsed')
+        ? ' <!-- click to expand -->' : '';
+
+      for (let a = 0; a < element.attributes.length; a++) {
+        let attr = element.attributes[a];
+
+        if (!attr.name.startsWith('data-')) {
+          attrs.push(`${attr.name}="${attr.value}"`);
+        }
+      }
+      attrs = attrs.length ? ` ${attrs.join(' ')}` : '';
+
+      element.setAttribute('data-opening-tag', `<${tag}${attrs}>${comment}`);
+      if (tag !== 'meta' && tag !== 'link') {
+        element.setAttribute('data-closing-tag', `</${tag}>`);
+      }
+    });
+  }
+
+  // Start with everything collapsed & allow clicking to expand
+  document.querySelectorAll('.collapsible').forEach(element => {
+    element.classList.add('collapsed');
+    element.onclick = event => {
+      element.classList.remove('collapsed');
+      event.stopPropagation();
+      updateTags();
+    };
+  });
+
+  // Allow re-collapsing by clicking outside collapsible areas
+  document.onclick = () => {
+    document.querySelectorAll('.collapsible').forEach(
+      element => element.classList.add('collapsed')
+    );
+    updateTags();
+  };
+
+  // Link to switch between dark/light mode
+  document.querySelector('#mode').onclick = event => {
+    document.documentElement.classList.toggle('light');
+    event.target.innerHTML = event.target.innerHTML === 'light mode'
+      ? 'dark mode' : 'light mode';
+  };
+
+  // Create the initial tags
+  updateTags();
+
+</script>
+
+</body>
+
+</html>
