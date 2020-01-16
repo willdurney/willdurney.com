@@ -12,4 +12,4 @@ information about my professional accomplishments and engineering work, please v
 ## About this repo
 
 This is the source of my personal website. Feel free to check it out at
-[willdurney.com](http://willdurney.com).
+[willdurney.com](https://willdurney.com).
